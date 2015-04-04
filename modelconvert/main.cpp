@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <direct.h>
 #include <blib/Util.h>
 #include <blib/json.h>
 #include <blib/util/FileSystem.h>
@@ -17,13 +18,18 @@ blib::json::Value convertAssimpAnim(const std::string &filename);
 int main(int argc, char* argv[])
 {
 	blib::util::FileSystem::registerHandler(new blib::util::PhysicalFileSystemHandler());
-	printf("...\n");
+	printf("ModelConverter...\n");
 	if (argc == 1)
 	{
 		printf("Please add a model filename as 2nd parameter\n");
 		getchar();
 		return -1;
 	}
+
+	char buf[1024];
+	_getcwd(buf, 1024);
+	printf("Current working dir: %s\n", buf);
+
 
 	std::string filename = argv[1];
 	std::replace(filename.begin(), filename.end(), '/', '\\');
@@ -42,6 +48,8 @@ int main(int argc, char* argv[])
 	if (extension == ".obj")
 		data = convertAssimp(filename);
 	if (extension == ".3ds")
+		data = convertAssimp(filename);
+	if (extension == ".fbx")
 		data = convertAssimp(filename);
 
 

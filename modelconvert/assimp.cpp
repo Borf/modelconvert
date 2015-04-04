@@ -45,7 +45,7 @@ void import(blib::json::Value &data, const aiScene* scene, aiNode* node, glm::ma
 	
 	matrix *= glm::transpose(transformation);
 
-	matrix = glm::mat4();
+	//matrix = glm::mat4();
 
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -302,7 +302,7 @@ blib::json::Value convertAssimp(std::string filename)
 		return blib::json::Value();
 	}
 
-	const aiScene* scene = importer.ReadFileFromMemory(data, len, aiProcessPreset_TargetRealtime_Quality | aiProcess_OptimizeMeshes | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeGraph);
+	const aiScene* scene = importer.ReadFileFromMemory(data, len, aiProcessPreset_TargetRealtime_Quality | aiProcess_OptimizeMeshes | aiProcess_RemoveRedundantMaterials | aiProcess_OptimizeGraph, filename.substr(filename.rfind(".")).c_str());
 	if (!scene)
 	{
 		printf("Errors? : %s\n", importer.GetErrorString());
