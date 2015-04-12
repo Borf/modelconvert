@@ -106,6 +106,8 @@ int main(int argc, char* argv[])
 
 	if (outfile == "-")
 		std::cout << data;
+	else if (data.isNull())
+		return 0;
 	else
 	{
 		//std::ofstream(outfile) << data;

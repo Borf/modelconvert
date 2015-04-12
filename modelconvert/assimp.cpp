@@ -13,6 +13,9 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
+blib::json::Value convertAssimpAnim(const std::string &filename);
+
+
 #pragma comment(lib, "../externals/assimp/assimp.lib")
 
 using blib::util::Log;
@@ -308,6 +311,14 @@ blib::json::Value convertAssimp(std::string filename)
 		printf("Errors? : %s\n", importer.GetErrorString());
 		return blib::json::Value();
 	}
+
+	if (scene->HasAnimations())
+	{
+		Log::out << "Found animation!" << Log::newline;
+		return convertAssimpAnim(filename);
+	}
+
+
 
 
 	blib::json::Value jsonData(blib::json::Type::objectValue);
